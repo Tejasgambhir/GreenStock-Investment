@@ -1,1 +1,3 @@
-djnago==4.2
+django==5.0.7
+pymongo
+dnspython
