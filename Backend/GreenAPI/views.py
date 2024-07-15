@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from .models import StockIndex
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from pymongo import MongoClient
 from bson.json_util import dumps, loads
 
@@ -10,10 +10,10 @@ def connection(collection):
     coll = db[collection]
     return coll
 
-def home_view(request):
+@api_view(['GET'])
+def get_stocks(request):
     coll = connection(collection="StockIndex")
     stocks = coll.find()
-    stocks_list = loads(dumps(stocks))  
-    print(stocks_list)# Convert cursor to list
-    return render(request, 'home.html', {'stocks': stocks_list})
+    stocks_list = loads(dumps(stocks))
+    return Response(stocks_list)
 
