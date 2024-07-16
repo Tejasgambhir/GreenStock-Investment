@@ -94,7 +94,6 @@ function App() {
       {/* The overall graphing component and its related code have been removed */}
       {selectedStock && timeFrame === 'All' && <StockGraphAll ticker={selectedStock.ticker} timeFrame={timeFrame} />}
       {selectedStock && timeFrame === 'Day' && <StockGraphDay ticker={selectedStock.ticker} timeFrame={timeFrame} />}
-      <StockHoldings onStockSelect={handleStockSelection} timeFrame={timeFrame} />
       {/* <HistoricHoldings/> */}
       {/* Rest of your components */}
     </div>
