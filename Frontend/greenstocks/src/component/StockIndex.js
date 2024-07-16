@@ -7,7 +7,7 @@ function StockIndex({ onStockSelect, timeFrame }) {
   const [images, setImages] = useState({});
 
   const fetchStocksIndex = async () => {
-    let apiUrl = 'http://localhost:8000/api/stocks/';
+    let apiUrl = 'http://localhost:8000/api/stocksindex/';
 
     try {
       const response = await fetch(apiUrl);
@@ -80,7 +80,6 @@ function StockIndex({ onStockSelect, timeFrame }) {
   console.log(images["APPL"]);
   return (
     <div className="stock-holdings">
-      <h2>Current Stock Holdings</h2>
       {stocks.map((stock, index) => (
 
         <button key={`sh_${index}`} className="stock-button" onClick={() => handleStockClick(stock)}>

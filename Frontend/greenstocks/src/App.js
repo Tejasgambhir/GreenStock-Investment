@@ -8,6 +8,7 @@ import HistoricHoldings from './component/HistoricHoldings';
 import TimeFrameFlip from './component/TimeFrameFlip';
 import Login from './component/Login'
 import GreenNews from './component/GreenNews';
+import StockIndex from './component/StockIndex';
 function App() {
   const [selectedStock, setSelectedStock] = useState(null);
   const [timeFrame, setTimeFrame] = useState('All');
@@ -91,9 +92,10 @@ function App() {
             </div>
         )}
       </header>
+      <StockIndex/>
       {/* The overall graphing component and its related code have been removed */}
-      {selectedStock && timeFrame === 'All' && <StockGraphAll ticker={selectedStock.ticker} timeFrame={timeFrame} />}
-      {selectedStock && timeFrame === 'Day' && <StockGraphDay ticker={selectedStock.ticker} timeFrame={timeFrame} />}
+      {/* {selectedStock && timeFrame === 'All' && <StockGraphAll ticker={selectedStock.ticker} timeFrame={timeFrame} />}
+      {selectedStock && timeFrame === 'Day' && <StockGraphDay ticker={selectedStock.ticker} timeFrame={timeFrame} />} */}
       {/* <HistoricHoldings/> */}
       {/* Rest of your components */}
     </div>
