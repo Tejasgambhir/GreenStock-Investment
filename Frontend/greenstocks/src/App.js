@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import homeImage from './Images/menu-con.jpg';
-import StockHoldings from './component/StockHoldings';
 import StockGraphAll from './component/StockGraphingAll';
 import StockGraphDay from './component/StockGraphingDay';
 import AllGraphingDay from './component/AllGraphingDay';
 import HistoricHoldings from './component/HistoricHoldings';
 import TimeFrameFlip from './component/TimeFrameFlip';
 import Login from './component/Login'
+import GreenNews from './component/GreenNews';
 function App() {
   const [selectedStock, setSelectedStock] = useState(null);
   const [timeFrame, setTimeFrame] = useState('All');
