@@ -1,53 +1,34 @@
 import React, { useState, useEffect } from 'react';
 
-function StockHoldings({ onStockSelect, timeFrame }) {
-  const [holdings, setHoldings] = useState([]);
-  const [images, setImages] = useState({});
-
-  // Function to fetch data from your API
-  const fetchStockHoldings = async () => {
-    if (timeFrame === 'All') {
-      try {
-        const response = await fetch(`http://localhost:8000/api/stock_holdings/`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log(data);
-        setHoldings(Object.values(data));
-      } catch (error) {
-        console.error('Fetching data failed:', error);
-      }
-    } else if (timeFrame === 'Day') {
-      try {
-        const response = await fetch('http://localhost:8000/api/stock_holdings_day/');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log(data);
-        setHoldings(Object.values(data)); 
-      } catch (error) {
-        console.error('Fetching data failed:', error);
-      }
-    }
-  };
+function StockIndex({ onStockSelect, timeFrame }) {
+  const [stocks, setStocks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Call fetchStockHoldings immediately when the component mounts
-    fetchStockHoldings();
-    // Set up the interval to fetch data regularly
-    const intervalId = setInterval(fetchStockHoldings, 1000); 
-    // Clear the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, [timeFrame]);
+    fetchStocksIndex();
+  }, []);
 
-  // Updated handleStockClick to pass the entire stock object
-  const handleStockClick = (stock) => {
-    if (onStockSelect) {
-      onStockSelect(stock); // Pass the entire stock object
+  const fetchStocksIndex = async () => {
+    let apiUrl = 'http://localhost:8000/api/stocks/';
+
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setStocks(JSON.parse(data));
+      setLoading(false);
+    } catch (error) {
+      console.error('Fetching data failed:', error);
+      setError('Error fetching stock data');
+      setLoading(false);
     }
   };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   // Function to load images
   const loadImage = async (ticker) => {
@@ -86,7 +67,7 @@ function StockHoldings({ onStockSelect, timeFrame }) {
   return (
     <div className="stock-holdings">
       <h2>Current Stock Holdings</h2>
-      {holdings.map((stock, index) => (
+      {stocks.map((stock, index) => (
         <button key={`sh_${index}`} className="stock-button" onClick={() => handleStockClick(stock)}>
           <img src={images[stock.ticker]} alt={stock.name} className="stock-image" />
           <div className="stock-details">
