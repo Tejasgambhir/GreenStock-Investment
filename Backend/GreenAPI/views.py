@@ -1,5 +1,7 @@
-from rest_framework.decorators import api_view
+from django.http import JsonResponse
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from pymongo import MongoClient
 from bson.json_util import dumps, loads
 
@@ -11,9 +13,11 @@ def connection(collection):
     return coll
 
 @api_view(['GET'])
-def get_stocks(request):
+@permission_classes([AllowAny])
+def get_stocks_index(request):
     coll = connection(collection="StockIndex")
     stocks = coll.find()
     stocks_list = loads(dumps(stocks))
-    return Response(stocks_list)
+    serialized_stocks = dumps(stocks_list)
+    return JsonResponse(serialized_stocks, safe=False)
 
