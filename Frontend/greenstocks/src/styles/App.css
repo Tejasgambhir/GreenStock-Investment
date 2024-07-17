@@ -244,8 +244,6 @@ h1 {
   border-bottom: 1px solid #dddddd;
 }
 
-
-
 .data-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
 }
@@ -254,8 +252,6 @@ h1 {
   font-weight: bold;
   color: #009879;
 }
-
-
 
 .container {
 
@@ -323,6 +319,7 @@ h1 {
   color: #008000;
 }
 
+/* Green News css */
 .GreenNews {
   text-align: center;
   padding: 20px;
@@ -375,4 +372,32 @@ h1 {
   font-size: 14px;
   color: #555;
   margin-top: 5px;
+}
+
+/* HeaderCss */
+.App-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a1a1a;
+  padding: 10px;
+}
+
+.nav-links button {
+  background-color: transparent;
+  border: none;
+  color: #F5F5F5;
+  margin: 0 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 17px; /* Adjust this value as needed */
+}
+
+.nav-links button:hover {
+  color: #4CAF50; /* Change color on hover for visual feedback */
+}
+
+.nav-links button.active {
+  font-weight: bold;
+  color: #F5F5F5;
 }
