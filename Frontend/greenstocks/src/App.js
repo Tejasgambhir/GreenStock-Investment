@@ -4,7 +4,9 @@ import HomePage from "./pages/HomePage";
 import GreenNewsPage from './pages/GreenNewsPage';
 import './styles/App.css';
 import AboutUsPage from './pages/AboutUsPage';
-import Stock from "./component/Stock";
+import Login from './component/Login';
+import ForgotPassword from './component/ForgotPassword';
+import Signup from './component/Signupp';
 
 function App() {
   return (
@@ -13,9 +15,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/news" element={<GreenNewsPage />} />
           <Route path="/aboutus" element={<AboutUsPage />} />
-          <Route path="/stocks/:ticker" element={<Stock />} />
-          {/* <Route path="/login" element={<LoginPage />} /> */}
-          {/* <Route path="/register" element={<RegisterPage />} /> */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/signup" element={<Signup />} />
           {/* <Route path="/profile" element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} /> */}
           {/* </Route> */}

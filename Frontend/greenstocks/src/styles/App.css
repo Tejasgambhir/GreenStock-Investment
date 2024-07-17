@@ -494,3 +494,98 @@ h1 {
 .social-media a:hover {
   text-decoration: underline;
 }
+
+/* css for login/resister page */
+/* ===========================
+   Login and Signup Page Styles
+   =========================== */
+
+   body.login-page, body.signup-page {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .login-container, .signup-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 400px;
+  }
+  
+  .login-container h1, .signup-container h1 {
+    margin-bottom: 20px;
+    color: black; /* Tomato red */
+  }
+  
+  .login-container input[type="text"],
+  .login-container input[type="password"],
+  .signup-container input[type="text"],
+  .signup-container input[type="password"],
+  .signup-container input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: gray;
+    color: #ffffff;
+  }
+  
+  .login-container input[type="submit"],
+  .signup-container input[type="submit"] {
+    background-color: #32cd32; /* Lime green */
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    width: 63%;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .login-container input[type="submit"]:hover,
+  .signup-container input[type="submit"]:hover {
+    background-color: #28a745;
+  }
+  
+  .login-container p,
+  .signup-container p {
+    margin: 20px 0 0;
+    color: black; /* Dodger blue */
+  }
+  
+  .login-container a,
+  .signup-container a {
+    color: #1e90ff; /* Dodger blue */
+    text-decoration: none;
+  }
+  
+  .login-container a:hover,
+  .signup-container a:hover {
+    text-decoration: underline;
+  }
+  
+  .signup-container .user-agreement {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .signup-container .user-agreement input {
+    margin-right: 10px;
+  }
+
+  .vishal::placeholder {
+    color: white;
+  }
+  #bla{
+    color: black;
+  }
