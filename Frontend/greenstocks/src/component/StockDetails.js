@@ -31,7 +31,7 @@ const StockDetails = ({ ticker }) => {
   if (!stockData) {
     return <div>Loading...</div>;
   }
-
+  console.log(stockData);
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
       {/* <h2>{stockData.companyname} ({stockData.tickersymbol})</h2>

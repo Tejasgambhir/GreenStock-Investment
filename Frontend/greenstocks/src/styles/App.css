@@ -95,9 +95,9 @@ body {
 /*-------------------*/
 .time-frame-flipper {
   position: absolute;
-  right: 2%; /* Adjust as necessary */
+  right: 40%; /* Adjust as necessary */
   top: 50%;
-  transform: translateY(-50%); /* Vertically center */
+  transform: translateY(300%); /* Vertically center */
 
   flex-grow: 0;
   flex-shrink: 0;
