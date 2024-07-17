@@ -9,7 +9,7 @@ import Header from './Header';
 import TimeFrameFlip from './TimeLine';
 function Stock() {
   const { ticker } = useParams();
-  const [timeFrame, setTimeFrame] = useState('all');
+  const [timeFrame, setTimeFrame] = useState('1y');
 
   const handleTimeFrameChange = (newTimeFrame) => {
     setTimeFrame(newTimeFrame);
