@@ -7,6 +7,7 @@ function Header() {
        <nav className="App-nav">
         <div className="project-title">GreenStock Investment</div>
         <div className="nav-links">
+        <button ><Link to='/'>Home</Link></button>
           <button ><Link to='/track'>Portfolio</Link></button>
           <button ><Link to='/news'>News</Link></button>
           <button><Link to='/aboutus'>About</Link></button>

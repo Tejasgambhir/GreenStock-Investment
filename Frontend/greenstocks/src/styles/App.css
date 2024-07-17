@@ -401,3 +401,96 @@ h1 {
   font-weight: bold;
   color: #F5F5F5;
 }
+
+/* About Us */
+.AboutUs {
+  text-align: center;
+  padding: 20px;
+}
+
+.about-section {
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.about-section h1 {
+  margin-bottom: 10px;
+  color: #ff6347; /* Tomato red */
+}
+
+.esg-section {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.esg-column {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  width: 30%;
+}
+
+.esg-column h2 {
+  margin-bottom: 10px;
+  color: #32cd32; /* Lime green */
+}
+
+.features-section {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.features-section h2 {
+  margin-bottom: 10px;
+  color: #1e90ff; /* Dodger blue */
+}
+
+.features-columns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.features-column {
+  list-style-type: none;
+  padding: 0;
+  width: 45%;
+}
+
+.features-column li {
+  background-color: #333333;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  color: #ffffff;
+  border-left: 5px solid #ff6347; /* Tomato red */
+}
+
+.features-column li:nth-child(even) {
+  border-left: 5px solid #32cd32; /* Lime green */
+}
+
+.contact-section {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.contact-section h2 {
+  margin-bottom: 10px;
+  color: #ff6347; /* Tomato red */
+}
+
+.social-media a {
+  color: #1e90ff; /* Dodger blue */
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.social-media a:hover {
+  text-decoration: underline;
+}
