@@ -12,7 +12,7 @@ from django.conf import settings
 from datetime import datetime, timedelta
 import finnhub
 
-CONNECTION_STRING = "mongodb+srv://vishalgawali2002:SsOrwk3GyqzYhnoI@cluster0.xkevobu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+CONNECTION_STRING = "mongodb+srv://vishalgawali2002:SsOrwk3GyqzYhnoI@cluster0.xkevobu.mongodb.net/?retryWrites=true&ssl=true&tlsAllowInvalidCertificates=true&w=majority&appName=Cluster0"
 def connection(collection):
     client = MongoClient(CONNECTION_STRING)
     db = client['GreenStockApp']
@@ -56,16 +56,25 @@ class GreenNewsView(View):
         try:
             news_data = finnhub_client.general_news('green Investment', min_id=0)
 
-            # # Filter news related to green technology, sustainability, etc.
-            # keywords = ['green technology', 'green investment', 'sustainability', 'renewable energy', 'climate change']
-            # filtered_news = [
-            #     news for news in news_data
-            #     if any(keyword in news['headline'].lower() or keyword in news['summary'].lower() 
-            #            for keyword in keywords)
-            # ]
+           #TODO Green and ESG Filtering
 
             return news_data
 
         except requests.RequestException as e:
             print(f"Error fetching news: {e}")
             return []
+class StockDetailsView(View):
+    def get(self, request, ticker):
+        stock_data = self.fetch_stock_data(ticker)
+        if stock_data:
+            return JsonResponse(stock_data)
+        else:
+            return JsonResponse({"error": "Stock not found"}, status=404)
+
+    def fetch_stock_data(self, ticker):
+        stock_collection = connection('Stock')
+        stock_data = stock_collection.find_one({"ticker": ticker})
+        if stock_data:
+            # Remove the MongoDB _id field as it's not JSON serializable
+            stock_data.pop('_id', None)
+        return stock_data
