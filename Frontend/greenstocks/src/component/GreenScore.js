@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useState} from 'react'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 export default function GreenScore({ticker}) {
@@ -10,7 +10,7 @@ export default function GreenScore({ticker}) {
 
   const fetchStockData = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/stocks/${ticker}`);
+      const response = await fetch(`http://localhost:8000/api/getscores/${ticker}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -32,7 +32,7 @@ export default function GreenScore({ticker}) {
       </div>
       <div className=" d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
-                <CircularProgressbar value={Math.floor(70)} text={`${Math.floor(70)}%`}/> 
+                <CircularProgressbar value={Math.floor(esgScore)} text={`${Math.floor(esgScore)}%`}/> 
       </div>
       </div>
     </div>
@@ -43,7 +43,7 @@ export default function GreenScore({ticker}) {
       </div>
       <div className="d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
-                <CircularProgressbar value={Math.floor(70)} text={`${Math.floor(70)}%`}/> 
+                <CircularProgressbar value={Math.floor(greenScore)} text={`${Math.floor(greenScore)}%`}/> 
       </div>
       </div>
     </div>
@@ -54,7 +54,7 @@ export default function GreenScore({ticker}) {
       </div>
       <div className=" d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
-                <CircularProgressbar value={Math.floor(70)} text={`${Math.floor(70)}%`}/> 
+                <CircularProgressbar value={Math.floor(recScore * 100)} text={`${Math.floor(recScore)}%`}/> 
       </div>
       </div>
     </div>
