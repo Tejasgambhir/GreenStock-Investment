@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import Stock from './Stock'; // Import the Stock component
 
-function StockIndex({ onStockSelect, timeFrame }) {
+function StockIndex() {
   const [stocks, setStocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [images, setImages] = useState({});
+  const [selectedTicker, setSelectedTicker] = useState(null); // State for selected stock ticker
 
   const fetchStocksIndex = async () => {
     let apiUrl = 'http://localhost:8000/api/stocksindex/';
@@ -31,7 +33,7 @@ function StockIndex({ onStockSelect, timeFrame }) {
     const intervalId = setInterval(fetchStocksIndex, 1000);
     // Clear the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, [timeFrame]);
+  }, []);
 
   useEffect(() => {
     const loadImage = async (ticker) => {
@@ -68,30 +70,31 @@ function StockIndex({ onStockSelect, timeFrame }) {
     }
   }, [stocks]);
 
-  const handleStockClick = (stock) => {
-    if (onStockSelect) {
-      onStockSelect(stock); // Pass the entire stock object
-    }
+  const handleStockClick = (ticker) => {
+    setSelectedTicker(ticker); // Set the selected stock ticker
   };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
   const defaultImage = 'Frontend\\greenstocks\\src\\Images\\default.jpg';
-  console.log(images["APPL"]);
+
   return (
     <div className="stock-holdings">
-      {stocks.map((stock, index) => (
-
-        <button key={`sh_${index}`} className="stock-button" onClick={() => handleStockClick(stock)}>
-          <img src={images[stock.ticker] || defaultImage} 
-           alt={stock.name} className="stock-image" />
-          <div className="stock-details">
-            <div className="stock-name">{stock.name}</div>
-          </div>
-          <div>{`ESG : ${stock.esg_score}`}</div>
-          <button className="btn btn-primary">Track</button>
-        </button>
-      ))}
+      {selectedTicker ? (
+        <Stock ticker={selectedTicker} /> // Render Stock component with selected ticker
+      ) : (
+        stocks.map((stock) => (
+          <button key={`sh_${stock.ticker}`} className="stock-button" onClick={() => handleStockClick(stock.ticker)}>
+            <img src={images[stock.ticker] || defaultImage} 
+            alt={stock.name} className="stock-image" />
+            <div className="stock-details">
+              <div className="stock-name">{stock.name}</div>
+            </div>
+            <div>{`ESG : ${stock.esg_score}`}</div>
+            <button className="btn btn-primary">Track</button>
+          </button>
+        ))
+      )}
     </div>
   );
 }
