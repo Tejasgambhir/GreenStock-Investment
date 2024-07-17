@@ -15,12 +15,12 @@ function Stock() {
     setTimeFrame(newTimeFrame);
   };
   // This is a placeholder. Implement your Stock component logic here.
-  console.log(ticker)
+ 
   return (
     <div>
       <Header/>
       <h2 className='text-center mt-5'>Stock Details for {ticker}</h2>
-      <GreenScore data = {ticker}/>
+      <GreenScore ticker = {ticker}/>
       <TimeFrameFlip onTimeFrameChange={handleTimeFrameChange} currentTimeFrame={timeFrame}/>
       {timeFrame === "all" && <StockGraphAll  ticker = {ticker} timeFrame={timeFrame}/>}
       {timeFrame === "1y" && <StockGraphMonth ticker = {ticker} timeFrame={timeFrame}/>}

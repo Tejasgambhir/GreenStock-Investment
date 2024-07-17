@@ -5,7 +5,7 @@ import 'chartjs-adapter-date-fns';
 
 function StockGraphAll({ ticker, timeFrame }) { // Use destructuring to get the ticker prop
     const [stockData, setStockData] = useState([]);
-    console.log(timeFrame)
+    
    
     useEffect(() => {
         // Ensure the ticker value is included in the fetch URL
