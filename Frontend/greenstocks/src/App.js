@@ -7,7 +7,7 @@ import AboutUsPage from './pages/AboutUsPage';
 import Login from './component/Login';
 import ForgotPassword from './component/ForgotPassword';
 import Signup from './component/Signupp';
-
+import Stock from './component/Stock';
 function App() {
   return (
     <Router>
@@ -18,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/stocks/:ticker" element={<Stock />} />
           {/* <Route path="/profile" element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} /> */}
           {/* </Route> */}

@@ -25,5 +25,6 @@ urlpatterns = [
     path('api/stocksindex/', views.get_stocks_index, name='get_stocks'),
     path('api/news/',view=views.GreenNewsView.as_view(),name="get_news"),
     path('api/stocks/<str:ticker>', views.StockDetailsView.as_view(), name='get_stocks'),
+    path('api/graph_stock/<str:ticker>/<str:time_frame>', views.get_stock_history, name='graph_stock'),
 ]
  

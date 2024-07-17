@@ -8,7 +8,7 @@ function StockGraphAll({ ticker, timeFrame }) { // Use destructuring to get the 
 
     useEffect(() => {
         // Ensure the ticker value is included in the fetch URL
-        fetch(`http://localhost:8000/api/graph_stock/${ticker}/`)
+        fetch(`http://localhost:8000/api/graph_stock/${ticker}/${timeFrame}`)
             .then(response => response.json())
             .then(data => setStockData(data))
             .catch(error => console.error('Error fetching data:', error));

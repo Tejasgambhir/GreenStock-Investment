@@ -7,11 +7,11 @@ function Header() {
        <nav className="App-nav">
         <div className="project-title">GreenStock Investment</div>
         <div className="nav-links">
-        <button ><Link to='/'>Home</Link></button>
-          <button ><Link to='/track'>Portfolio</Link></button>
-          <button ><Link to='/news'>News</Link></button>
-          <button><Link to='/aboutus'>About</Link></button>
-          <button><Link to='/login'>Login/Register</Link></button>
+        <button ><Link to='/' className='btn btn-dark'>Home</Link></button>
+          <button ><Link to='/track' className='btn btn-dark'>Portfolio</Link></button>
+          <button ><Link to='/news' className='btn btn-dark'>News</Link></button>
+          <button><Link to='/aboutus' className='btn btn-dark'>About</Link></button>
+          <button><Link to='/login' className='btn btn-dark'>Login/Register</Link></button>
         </div>
       </nav>
     </div>

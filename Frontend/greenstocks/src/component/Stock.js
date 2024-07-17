@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import StockGraphAll from './StockGraphingAll';
-// import greenScore from './greenScore';
+import GreenScore from './GreenScore';
 import StockDetails from './StockDetails';
 import Header from './Header';
 function Stock() {
@@ -10,11 +10,10 @@ function Stock() {
   return (
     <div>
       <Header/>
-      <h2>Stock Details for {ticker}</h2>
-      {/* <greenScore data = {ticker}/> */}
-      {/* <StockGraphAll ticker = {ticker} timeFrame={"ALL"}/> */}
+      <h2 className='text-center mt-5'>Stock Details for {ticker}</h2>
+      <GreenScore data = {ticker}/>
+      <StockGraphAll ticker = {ticker} timeFrame={"ALL"}/>
       <StockDetails ticker = {ticker} />
-      {/* Render stock details here */}
     </div>
   );
 }

@@ -11,6 +11,7 @@ const StockDetails = ({ ticker }) => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
+      console.log(typeof(data));
       setStockData(data);
     } catch (err) {
       setError(err.message || 'An error occurred');
@@ -33,7 +34,7 @@ const StockDetails = ({ ticker }) => {
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
-      <h2>{stockData.companyname} ({stockData.tickersymbol})</h2>
+      {/* <h2>{stockData.companyname} ({stockData.tickersymbol})</h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
         <div>
           <h3>Company Details</h3>
@@ -61,7 +62,44 @@ const StockDetails = ({ ticker }) => {
           <p>Latest Score Date: {stockData['Latest Score Date']}</p>
           <p>Request ID: {stockData.request_id}</p>
         </div>
-      </div>
+      </div> */}
+        <header className="App-header">
+        <div className="header-content">
+          <div className="title-container">
+            <h1>
+              {/* {selectedStock ? `${selectedStock.name}` : "Overall Portfolio"} */}
+              Overall Portfolio
+            </h1>
+          </div>
+          {/* <TimeFrameFlip
+            onTimeFrameChange={handleTimeFrameChange}
+            currentTimeFrame={timeFrame}
+          /> */}
+        </div>
+        {/* {!selectedStock && timeFrame === "Day" && <AllGraphingDay />} */}
+        {(
+          <div className="stock-info">
+            <div className="table-container">
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {Object.keys(stockData).map((key, index) => (  // Iterate over object keys
+                <tr key={index}>
+                  <td>{key}</td>  {/* Display key as parameter */}
+                  <td>{stockData[key]}</td>  {/* Display value */}
+                </tr>
+              ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+      </header>
     </div>
   );
 };

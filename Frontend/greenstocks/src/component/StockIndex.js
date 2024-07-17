@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import the Stock component
-
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 function StockIndex() {
   const [stocks, setStocks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -88,7 +89,9 @@ function StockIndex() {
             <div className="stock-details">
               <div className="stock-name">{stock.name}</div>
             </div>
-            <div>{`ESG : ${stock.esg_score}`}</div>
+            <div style={{ width: 100, height: 100 }}>
+                <CircularProgressbar value={Math.floor(stock.esg_score)} text={`${Math.floor(stock.esg_score)}%`}/> 
+            </div>
             <button className="btn btn-primary">Track</button>
           </button>
         ))

@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from pymongo import MongoClient
 from bson.json_util import dumps, loads
 import requests
+import yfinance as yf   
 from django.views import View
 from django.http import JsonResponse
 from django.core.cache import cache
@@ -64,11 +65,6 @@ class GreenNewsView(View):
             print(f"Error fetching news: {e}")
             return []
 
-from django.views import View
-from django.http import JsonResponse
-from django.core.cache import cache
-from bson.json_util import dumps, loads
-
 class StockDetailsView(View):
 
     def get(self, request, ticker):
@@ -91,3 +87,38 @@ class StockDetailsView(View):
             stock_data = loads(dumps(stock_data))
             stock_data.pop('_id', None)
         return stock_data
+
+
+def get_stock_history(request, ticker, time_frame):
+    if not ticker:
+        return JsonResponse({"error": "Ticker symbol is required."}, status=400)
+    if time_frame not in ['1d', '1m', '1y', 'all']:
+        return JsonResponse({"error": "Invalid time frame. Valid options are '1d', '1m', '1y', 'all'."}, status=400)
+
+    stock = yf.Ticker(ticker)
+    end_date = datetime.now()
+
+    if time_frame == '1d':
+        start_date = end_date
+    elif time_frame == '1m':
+        start_date = end_date.replace(month=end_date.month - 1)
+    elif time_frame == '1y':
+        start_date = end_date.replace(year=end_date.year - 1)
+    elif time_frame == 'all':
+        start_date = None  # yf.Ticker.history defaults to max history when start is None
+
+    if start_date:
+        historical_prices = stock.history(start=start_date.strftime('%Y-%m-%d'), end=end_date.strftime('%Y-%m-%d'))
+    else:
+        historical_prices = stock.history(period="max")
+
+    historical_values = []
+
+    for date, row in historical_prices.iterrows():
+        date = date.to_pydatetime().replace(tzinfo=None)  # Make date timezone naive
+        historical_values.append({
+            "date": date.strftime('%Y-%m-%d'), 
+            "value": row['Close']
+        })
+
+    return JsonResponse(historical_values, safe=False)
