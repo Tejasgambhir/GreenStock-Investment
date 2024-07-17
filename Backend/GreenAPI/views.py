@@ -179,8 +179,25 @@ class CurrentStockValueView(View):
         for updater in self.stock_updaters.values():
             updater.cancel()
 
+class StockScoresView(View):
+    def get(self, request, ticker):
+        cache_key = f'stock_scores_{ticker}'
+        stock_data = cache.get(cache_key)
 
+        if not stock_data:
+            stock_data = self.fetch_stock_scores(ticker)
+            if stock_data:
+                cache.set(cache_key, stock_data, timeout=120)  # Cache timeout set to 120 seconds (2 minutes)
+            else:
+                return JsonResponse({"error": "Stock not found"}, status=404)
+        return JsonResponse(stock_data, safe=False)
 
+    def fetch_stock_scores(self, ticker):
+        stock_collection = connection('Stocks')
+        stock_data = stock_collection.find_one({"ticker": ticker}, {"_id": 0, "green_score": 1, "Recommendation_score": 1, "Overall Score": 1})
+        if stock_data:
+            stock_data = loads(dumps(stock_data))  # Convert MongoDB BSON to JSON
+        return stock_data
 
 # def get_green_score_v1(ticker):
 #     # session = requests.Session()
