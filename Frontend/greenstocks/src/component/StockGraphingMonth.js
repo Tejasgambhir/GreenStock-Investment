@@ -8,7 +8,7 @@ function StockGraphDay({ ticker, timeFrame }) {
    
     useEffect(() => {
         // Ensure the ticker value is included in the fetch URL
-        fetch(`http://localhost:8000/api/graph_stock/${ticker}/${"1m"}`)
+        fetch(`http://localhost:8000/api/graph_stock/${ticker}/${"1y"}`)
             .then(response => response.json())
             .then(data => setStockData(data))
             .catch(error => console.error('Error fetching data:', error));

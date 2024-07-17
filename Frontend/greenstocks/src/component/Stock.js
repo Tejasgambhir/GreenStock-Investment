@@ -22,9 +22,9 @@ function Stock() {
       <h2 className='text-center mt-5'>Stock Details for {ticker}</h2>
       <GreenScore data = {ticker}/>
       <TimeFrameFlip onTimeFrameChange={handleTimeFrameChange} currentTimeFrame={timeFrame}/>
-      {timeFrame === "1y" && <StockGraphAll  ticker = {ticker} timeFrame={timeFrame}/>}
-      {timeFrame === "1m" && <StockGraphMonth ticker = {ticker} timeFrame={timeFrame}/>}
-      {timeFrame === "1d" && <StockGraphDay ticker = {ticker} timeFrame={timeFrame}/>}
+      {timeFrame === "all" && <StockGraphAll  ticker = {ticker} timeFrame={timeFrame}/>}
+      {timeFrame === "1y" && <StockGraphMonth ticker = {ticker} timeFrame={timeFrame}/>}
+      {timeFrame === "1m" && <StockGraphDay ticker = {ticker} timeFrame={timeFrame}/>}
 
       <StockDetails ticker = {ticker} />
     </div>

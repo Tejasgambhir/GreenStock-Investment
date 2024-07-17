@@ -8,12 +8,12 @@ function StockGraphDay({ ticker, timeFrame }) {
     console.log(timeFrame);
     useEffect(() => {
         // Ensure the ticker value is included in the fetch URL
-        fetch(`http://localhost:8000/api/graph_stock/${ticker}/${"1d"}`)
+        fetch(`http://localhost:8000/api/graph_stock/${ticker}/${"1m"}`)
             .then(response => response.json())
             .then(data => setStockData(data))
             .catch(error => console.error('Error fetching data:', error));
     }, [ticker]);
-    
+
     const chartData = {
         labels: stockData.map(data => data.date),
         datasets: [
@@ -29,18 +29,7 @@ function StockGraphDay({ ticker, timeFrame }) {
                 pointRadius: 0,
                 hoverRadius: 0,
             },
-            {
-                // Dataset for cumulative investment
-                label: 'Cumulative Investment',
-                data: stockData.map(data => data.value_paid),
-                fill: false,
-                
-                borderColor: 'rgb(245, 245, 245)',
-                borderWidth: 0.75,
-                tension: 0.1,
-                pointRadius: 0,
-                hoverRadius: 0,
-            },
+            
         ]
     };
 
