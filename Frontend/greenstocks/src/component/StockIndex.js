@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Stock from './Stock'; // Import the Stock component
+import { useNavigate } from 'react-router-dom'; // Import the Stock component
 
 function StockIndex() {
   const [stocks, setStocks] = useState([]);
@@ -7,7 +7,7 @@ function StockIndex() {
   const [error, setError] = useState(null);
   const [images, setImages] = useState({});
   const [selectedTicker, setSelectedTicker] = useState(null); // State for selected stock ticker
-
+  const navigate = useNavigate();
   const fetchStocksIndex = async () => {
     let apiUrl = 'http://localhost:8000/api/stocksindex/';
 
@@ -47,11 +47,9 @@ function StockIndex() {
             const image = await import(`../Images/${modifiedTicker}.png`);
             return image.default;
           } catch (innerError) {
-            console.error('Error loading image:', innerError);
             return '';
           }
         } else {
-          console.error('Error loading image:', error);
           return '';
         }
       }
@@ -81,7 +79,7 @@ function StockIndex() {
   return (
     <div className="stock-holdings">
       {selectedTicker ? (
-        <Stock ticker={selectedTicker} /> // Render Stock component with selected ticker
+        navigate(`/stocks/${selectedTicker}`)// Render Stock component with selected ticker
       ) : (
         stocks.map((stock) => (
           <button key={`sh_${stock.ticker}`} className="stock-button" onClick={() => handleStockClick(stock.ticker)}>

@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import GreenNewsPage from './pages/GreenNewsPage';
 import './styles/App.css';
 import AboutUsPage from './pages/AboutUsPage';
+import Stock from "./component/Stock";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/news" element={<GreenNewsPage />} />
           <Route path="/aboutus" element={<AboutUsPage />} />
+          <Route path="/stocks/:ticker" element={<Stock />} />
           {/* <Route path="/login" element={<LoginPage />} /> */}
           {/* <Route path="/register" element={<RegisterPage />} /> */}
           {/* <Route path="/profile" element={<PrivateRoute />}>

@@ -63,18 +63,31 @@ class GreenNewsView(View):
         except requests.RequestException as e:
             print(f"Error fetching news: {e}")
             return []
+
+from django.views import View
+from django.http import JsonResponse
+from django.core.cache import cache
+from bson.json_util import dumps, loads
+
 class StockDetailsView(View):
+
     def get(self, request, ticker):
-        stock_data = self.fetch_stock_data(ticker)
-        if stock_data:
-            return JsonResponse(stock_data)
-        else:
-            return JsonResponse({"error": "Stock not found"}, status=404)
+        cache_key = f'stock_data_{ticker}'
+        stock_data = cache.get(cache_key)
+
+        if not stock_data:
+            stock_data = self.fetch_stock_data(ticker)
+            if stock_data:
+                cache.set(cache_key, stock_data, timeout=120)  # Cache timeout set to 120 seconds (2 minutes)
+            else:
+                return JsonResponse({"error": "Stock not found"}, status=404)
+
+        return JsonResponse(stock_data)
 
     def fetch_stock_data(self, ticker):
-        stock_collection = connection('Stock')
+        stock_collection = connection('Stocks')
         stock_data = stock_collection.find_one({"ticker": ticker})
         if stock_data:
-            # Remove the MongoDB _id field as it's not JSON serializable
+            stock_data = loads(dumps(stock_data))
             stock_data.pop('_id', None)
         return stock_data
