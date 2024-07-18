@@ -108,7 +108,7 @@ def get_stock_history(request, ticker, time_frame):
     elif time_frame == '1y':
         start_date = end_date - timedelta(days=365)
     elif time_frame == 'all':
-        start_date = None  # yf.Ticker.history defaults to max history when start is None
+        start_date = datetime(2000, 1, 1) # yf.Ticker.history defaults to max history when start is None
 
     if start_date:
         historical_prices = stock.history(start=start_date.strftime('%Y-%m-%d'), end=end_date.strftime('%Y-%m-%d'))
