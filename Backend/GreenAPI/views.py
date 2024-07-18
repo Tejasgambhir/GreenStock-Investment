@@ -216,90 +216,138 @@ class StockScoresView(View):
             stock_data = loads(dumps(stock_data))  # Convert MongoDB BSON to JSON
         return stock_data
 
-# def get_green_score_v1(ticker):
-#     # session = requests.Session()
-    
-#     try:
-#         session = requests_cache.CachedSession('yfinance.cache')
-#         session.verify = False
-        
-#         stock = yfinance.Ticker(ticker,session)
 
-#         stockInfoAggregated = StringBuilder()
+import requests
+import requests_cache
+import yfinance as yf
+import pandas as pd
+from goose3 import Goose
+from nltk.corpus import stopwords
+import nltk
+from collections import defaultdict
+from django.core.cache import cache
+from django.http import JsonResponse
+import json
+import sys
+import os
 
-#         # get stock info
-#         stockInfo = stock.info
-#         businessDescription = stockInfo['longBusinessSummary']
-#         stockInfoAggregated.Append(f'{businessDescription} ')
 
-#         # show news
-#         dataStockNews = stock.news
-#         # dataStockNews = json.loads(stock.news)
-#         dfStockNews = pd.json_normalize(dataStockNews)
-#         dfStockNews.to_csv(f'{DATA_DIR}\\stocknews_{ticker}.csv')
 
-#         g = Goose()
-#         for d in dataStockNews:
-#             stockInfoAggregated.Append(f'{d["title"]} ')
-#             response = requests.get(d['link'],verify=False)
-#             article = g.extract(raw_html = response.text)
-#             article_clean = article.cleaned_text
-#             article_clean = custom_clean_text(article_clean)
-#             stockInfoAggregated.Append(f'{article_clean} ')
-#         g.close()
+def custom_clean_text(text):
+    # Add your custom text cleaning function here
+    return text
 
-#         with open(f'{DATA_DIR}\\aggtokens_{ticker}.txt', 'w') as f:
-#             fcontent = stockInfoAggregated.Text().replace('\n',' ')
-#             f.write(fcontent)
+class StockGreenScoresView(View):
+    nltk.download('stopwords')
+    DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
-#         tokens = [t for t in fcontent.split()]
-        
-#         clean_tokens = tokens[:]
-        
-#         stopworden = stopwords.words('english')
+    def get(self, request, ticker):
+        cache_key = f'green_score_{ticker}'
+        cached_response = cache.get(cache_key)
+        sustainability_tokens = [
+    'CLEAN', 'ENERGY', 'GREEN', 'PLANET', 'EMISSIONS', 'NATURAL', 
+    'SUSTAINABLE', 'RENEWABLE', 'SOLAR', 'WIND', 'HYDRO', 'BIOFUEL', 
+    'ECO-FRIENDLY', 'RECYCLING', 'CONSERVATION', 'CARBON', 'FOOTPRINT', 
+    'OFFSET', 'CLIMATE', 'CHANGE', 'ENVIRONMENTAL', 'RESPONSIBILITY', 
+    'SOCIAL', 'GOVERNANCE', 'ESG', 'ETHICAL', 'RESPONSIBLE', 'INVESTMENT', 
+    'CIRCULAR', 'ECONOMY', 'WASTE', 'MANAGEMENT', 'POLLUTION', 'REDUCTION', 
+    'BIODIVERSITY', 'HABITAT', 'PRESERVATION', 'WILDLIFE', 'PROTECTION', 
+    'SUSTAINABILITY', 'WATER', 'EFFICIENCY', 'RENEWABLES', 'ELECTRIC VEHICLE', 
+    'GREENHOUSE', 'WASTE', 'NET', 'ZERO', 'CARBON', 'NEUTRAL', 'DECARBONIZATION',
+    'ECOLOGICAL', 'IMPACT', 'ORGANIC', 'FAIR', 'SOCIALJUSTICE', 'COMMUNITY', 'INCLUSION', 'GOVERNANCE', 'TRANSPARENCY', 
+    'ACCOUNTABILITY', 'ETHICS', 
+    'SUSTAINABILITY'
+]
 
-#         # add more stop words
-#         more =  ['a','the','•','-','&',' ','None','per','none','company''s','Company''s','stock','Stock']
-#         for el in more:
-#             stopworden.append(el)
-#             stopworden.append(el.capitalize())
-        
-#         for token in tokens:
-#             if token in stopworden:
-#                 clean_tokens.remove(token)
+        if cached_response:
+            return JsonResponse(cached_response, safe=False)
 
-#         freq = nltk.FreqDist(clean_tokens)
+        try:
+            session = requests_cache.CachedSession('yfinance.cache')
+            session.verify = False
+            
+            stock = yf.Ticker(ticker, session=session)
+            stock_info_aggregated = []
 
-#         green_tokens= 0
-#         green_focus = 0 # calculate as sums of occurrences of green tokens in the sum of tokens for first 10 indexes
-#         sum_tokens_10 = 0
-#         index = 0
-#         freq_items = []
-#         for key,val in freq.items():
-#             index = index + 1
-#             # print (str(key) + ':' + str(val))
-#             freq_items.append((key,val))
-#             if index <= 10:
-#                 # get sum of tokens for first 10 indexes
-#                 sum_tokens_10 = sum_tokens_10 + val
-#             if str(key).upper() in ['CLEAN','ENERGY','GREEN','PLANET','EMMISSIONS','NATURAL']:
-#                 if index <= 10:
-#                     # if g-tokens found in the first 10 indexes, get a bonus
-#                     green_focus = green_focus + val * (10-index)
-#                 green_tokens = green_tokens + val
-#         # freq.plot(20,cumulative=False,show=False)
-        
-#         green_focus = round(green_focus / sum_tokens_10,2)
-#         green_density = round(100*float(green_tokens/len(freq.items())),2)
-#         print('Total Tokens:',len(freq.items()),' G-Tokens:',green_tokens,' Green Focus:',green_focus,' Green Density:',green_density)
-#         response = []
-#         response.append(('Total Tokens',len(freq.items())))
-#         response.append(('Green Tokens',green_tokens))
-#         response.append(('Green Score',round(float(green_tokens/len(freq.items())),3)))
-#         response.append(('Green Focus',green_focus))
-#         response.append(('Green Density',green_density))
-#         response.append(('Relevant Tokens',[t for t in freq_items if t[1] >= 5]))
-#         return json.dumps(response)
-#     except:
-#         e = sys.exc_info()[0]
-#         return json.dumps(f'Error: {e}'),500 
+            # get stock info
+            stock_info = stock.info
+            business_description = stock_info.get('longBusinessSummary', '')
+            stock_info_aggregated.append(business_description)
+
+            # show news
+            data_stock_news = stock.news
+            df_stock_news = pd.json_normalize(data_stock_news)
+            df_stock_news.to_csv(f'{self.DATA_DIR}/stocknews_{ticker}.csv', index=False)
+
+            g = Goose()
+            for d in data_stock_news:
+                stock_info_aggregated.append(d["title"])
+                response = requests.get(d['link'], verify=False)
+                article = g.extract(raw_html=response.text)
+                article_clean = custom_clean_text(article.cleaned_text)
+                stock_info_aggregated.append(article_clean)
+            g.close()
+
+            aggregated_text = ' '.join(stock_info_aggregated).replace('\n', ' ')
+
+            with open(f'{self.DATA_DIR}/aggtokens_{ticker}.txt', 'w') as f:
+                f.write(aggregated_text)
+
+            tokens = aggregated_text.split()
+            stopworden = set(stopwords.words('english'))
+            additional_stopwords = {'a', 'the', '•', '-', '&', ' ', 'None', 'per', 'none', 'company', 'Company', 'stock', 'Stock'}
+            stopworden.update(additional_stopwords)
+
+            clean_tokens = [token for token in tokens if token not in stopworden]
+            freq = nltk.FreqDist(clean_tokens)
+
+            green_tokens = 0
+            green_focus = 0
+            sum_tokens_10 = 0
+            freq_items = []
+
+            for index, (key, val) in enumerate(freq.items(), start=1):
+                freq_items.append((key, val))
+                if index <= 10:
+                    sum_tokens_10 += val
+                if key.upper() in sustainability_tokens :
+                    if index <= 10:
+                        green_focus += val * (10 - index)
+                    green_tokens += val
+
+            green_focus = round(green_focus / sum_tokens_10, 2) if sum_tokens_10 > 0 else 0
+
+            response_data = {
+                'Total Tokens': len(freq.items()),
+                'Green Tokens': green_tokens,
+                'Green Score': round(green_tokens * 10 / len(freq.items()), 2),
+                'Green Focus': green_focus,
+                'Relevant Tokens': [t for t in freq_items if t[1] >= 5]
+            }
+
+            cache.set(cache_key, response_data, timeout=60*60)  # Cache for 1 hour
+            return JsonResponse(response_data, safe=False)
+        except Exception as e:
+            error_message = str(e)
+            return JsonResponse({'error': error_message}, status=500)
+
+    def fetch_stock_scores(self, ticker):
+        # Assuming the MongoDB connection is properly configured
+        client = MongoClient('localhost', 27017)
+        db = client['StockDatabase']  # Replace with your database name
+        stock_collection = db['Stocks']  # Replace with your collection name
+
+        stock_data = stock_collection.find_one(
+            {"ticker": ticker},
+            {
+                "_id": 0,
+                "green_score": 1,
+                "Recommendation_score": 1,
+                "Governance Pillar Score": 1,
+                "Environmental Pillar Score": 1,
+                "Social Pillar Score": 1,
+            }
+        )
+        if stock_data:
+            stock_data = loads(dumps(stock_data))  # Convert MongoDB BSON to JSON
+        return stock_data
