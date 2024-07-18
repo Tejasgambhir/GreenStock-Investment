@@ -8,6 +8,7 @@ export default function GreenScore({ticker}) {
   const [GScore, setGScore] = useState(null);
   const [greenScore, setgreenScore] = useState(null);
   const [recScore, setrecScore] = useState(null);
+  const [washScore, setwashScore] = useState(null);
   const [error, setError] = useState(null);
 
 
@@ -31,6 +32,26 @@ export default function GreenScore({ticker}) {
   useEffect(() => {
     if (ticker) {
       fetchStockScore();
+    }
+  }, [ticker]);
+
+
+  const fetchgreenWash = async (ticker) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/greenwash/${ticker}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data);
+      setwashScore(data);
+    } catch (err) {
+      setError(err.message || 'An error occurred');
+    }
+  };
+  useEffect(() => {
+    if (ticker) {
+      fetchgreenWash(ticker);
     }
   }, [ticker]);
 
@@ -83,17 +104,17 @@ export default function GreenScore({ticker}) {
       </div>
     </div>
   
-    {/* <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
+    <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className=" green-score text-center alert alert-success">
         
-        <p className='text-white'>Recommendation Score</p>
+        <p className='text-white'>GreenWash Score</p>
       </div>
       <div className=" d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
-                <CircularProgressbar value={Math.floor(recScore )} text={`${Math.floor(recScore)}%`}/> 
+                <CircularProgressbar value={Math.floor(washScore )} text={`${Math.floor(washScore)}%`}/> 
       </div>
       </div>
-    </div> */}
+    </div>
   </div>
   
     
