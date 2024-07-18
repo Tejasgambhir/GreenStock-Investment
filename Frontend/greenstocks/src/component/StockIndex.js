@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import the Stock component
+import { useNavigate } from 'react-router-dom';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import defaultImage from '../Images/RR.png'; 
+
 function StockIndex() {
   const [stocks, setStocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [images, setImages] = useState({});
-  const [selectedTicker, setSelectedTicker] = useState(null); // State for selected stock ticker
+  const [selectedTicker, setSelectedTicker] = useState(null);
   const navigate = useNavigate();
+
   const fetchStocksIndex = async () => {
     let apiUrl = 'http://localhost:8000/api/stocksindex/';
 
@@ -48,10 +51,10 @@ function StockIndex() {
             const image = await import(`../Images/${modifiedTicker}.png`);
             return image.default;
           } catch (innerError) {
-            return '';
+            return defaultImage;
           }
         } else {
-          return '';
+          return defaultImage;
         }
       }
     };
@@ -70,27 +73,25 @@ function StockIndex() {
   }, [stocks]);
 
   const handleStockClick = (ticker) => {
-    setSelectedTicker(ticker); // Set the selected stock ticker
+    setSelectedTicker(ticker);
   };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-  const defaultImage = 'Frontend\\greenstocks\\src\\Images\\default.jpg';
 
   return (
     <div className="stock-holdings">
       {selectedTicker ? (
-        navigate(`/stocks/${selectedTicker}`)// Render Stock component with selected ticker
+        navigate(`/stocks/${selectedTicker}`)
       ) : (
         stocks.map((stock) => (
           <button key={`sh_${stock.ticker}`} className="stock-button" onClick={() => handleStockClick(stock.ticker)}>
-            <img src={images[stock.ticker] || defaultImage} 
-            alt={stock.name} className="stock-image" />
+            <img src={images[stock.ticker] || defaultImage} alt={stock.name} className="stock-image" />
             <div className="stock-details">
               <div className="stock-name">{stock.name}</div>
             </div>
             <div style={{ width: 100, height: 100 }}>
-                <CircularProgressbar value={Math.floor(stock.esg_score)} text={`${Math.floor(stock.esg_score)}%`}/> 
+              <CircularProgressbar value={Math.floor(stock.esg_score)} text={`${Math.floor(stock.esg_score)}%`} />
             </div>
             <button className="btn btn-primary">Track</button>
           </button>
