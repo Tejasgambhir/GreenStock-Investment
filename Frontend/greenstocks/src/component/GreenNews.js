@@ -4,7 +4,7 @@ function GreenNews() {
     const [newsData, setNewsData] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/news')
+        fetch('http://localhost:8000/api/news/')
             .then(response => response.json())
             .then(data => setNewsData(data))
             .catch(error => console.error('Error fetching news:', error));

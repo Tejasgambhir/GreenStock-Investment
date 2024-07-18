@@ -146,3 +146,20 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True
 
 FINNHUB_API_KEY = "cqak0vpr01qmfd84sd60cqak0vpr01qmfd84sd6g"
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+
+CORS_ALLOWED_HEADERS = [
+    "content-type",
+    "authorization",
+]
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "DELETE",
+    "OPTIONS",
+]
