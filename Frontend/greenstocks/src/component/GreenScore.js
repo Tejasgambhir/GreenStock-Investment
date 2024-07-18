@@ -38,7 +38,7 @@ export default function GreenScore({ticker}) {
   return (
     
   <div className="w-100  d-flex p-3 justify-content-between">
-    <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
+    <div className="row bg-gradient-success score-container m-3 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className=" green-score text-center alert alert-success">
         Green Score: Decent
       </div>
@@ -49,7 +49,7 @@ export default function GreenScore({ticker}) {
       </div>
     </div>
    
-    <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
+    <div className="row bg-gradient-success score-container m-3 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className="green-score text-center alert alert-success">
         Environmental Score: Decent
       </div>
@@ -59,7 +59,7 @@ export default function GreenScore({ticker}) {
       </div>
       </div>
     </div>
-    <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
+    <div className="row bg-gradient-success score-container m-3 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className="green-score text-center alert alert-success">
         Social Score: Decent
       </div>
@@ -69,7 +69,7 @@ export default function GreenScore({ticker}) {
       </div>
       </div>
     </div>
-    <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
+    <div className="row bg-gradient-success score-container m-3 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className="green-score text-center alert alert-success">
         Goverance Score: Decent
       </div>
