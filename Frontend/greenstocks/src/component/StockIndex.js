@@ -79,7 +79,9 @@ function StockIndex() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="stock-holdings">
+    <>
+
+
       {selectedTicker ? (
         navigate(`/stocks/${selectedTicker}`)
       ) : (
@@ -97,7 +99,8 @@ function StockIndex() {
           </button>
         ))
       )}
-    </div>
+   
+        </>
   );
 }
 

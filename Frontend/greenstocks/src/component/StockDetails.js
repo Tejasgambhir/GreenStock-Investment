@@ -32,7 +32,7 @@ const StockDetails = ({ ticker }) => {
   }
 
   return (
-    <div style={{ maxWidth: '800px', margin: '5 auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
       <header className="App-header">
         <div className="header-content">
           <div className="title-container">
