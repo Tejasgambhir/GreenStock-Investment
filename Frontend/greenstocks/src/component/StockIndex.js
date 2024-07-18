@@ -29,7 +29,6 @@ function StockIndex() {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchStocksIndex();
 
@@ -93,6 +92,7 @@ function StockIndex() {
             <div style={{ width: 100, height: 100 }}>
               <CircularProgressbar value={Math.floor(stock.esg_score)} text={`${Math.floor(stock.esg_score)}%`} />
             </div>
+            <div>{stock.current_price}</div>
             <button className="btn btn-primary">Track</button>
           </button>
         ))
