@@ -83,7 +83,7 @@ export default function GreenScore({ticker}) {
       </div>
     </div>
   
-    <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
+    {/* <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className=" green-score text-center alert alert-success">
         
         <p className='text-white'>Recommendation Score</p>
@@ -93,7 +93,7 @@ export default function GreenScore({ticker}) {
                 <CircularProgressbar value={Math.floor(recScore )} text={`${Math.floor(recScore)}%`}/> 
       </div>
       </div>
-    </div>
+    </div> */}
   </div>
   
     
