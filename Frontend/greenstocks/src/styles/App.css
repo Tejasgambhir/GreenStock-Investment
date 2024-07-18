@@ -598,3 +598,8 @@ h1 {
   #bla{
     color: black;
   }
+
+  .custom-green-score {
+    background-color: #8400ff /* Replace with your desired background color */
+  }
+  
