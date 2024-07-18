@@ -8,6 +8,8 @@ import Login from './component/Login';
 import ForgotPassword from './component/ForgotPassword';
 import Signup from './component/Signupp';
 import Stock from './component/Stock';
+import Portfolio from './component/Portfolio';
+
 function App() {
   return (
     <Router>
@@ -19,6 +21,8 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/stocks/:ticker" element={<Stock />} />
+          <Route path="/Portfolio" element={<Portfolio />} />
+
           {/* <Route path="/profile" element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} /> */}
           {/* </Route> */}
