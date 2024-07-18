@@ -102,7 +102,7 @@ function StockIndex() {
               <CircularProgressbar value={Math.floor(stock.esg_score)} text={`${Math.floor(stock.esg_score)}%`} />
             </div>
             <div className="gain-loss" style={{ color: Math.floor(stock.value_change) < 0 ? 'red' : 'green' }}>
-              {`${stock.value_change.toFixed(2)}%`}
+              {/* {`${stock.value_change.toFixed(2)}%`} */}
             </div>
             <div>{stock.current_price}</div>  
             <button className="btn btn-primary">Track</button>

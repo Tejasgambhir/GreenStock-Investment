@@ -43,17 +43,27 @@ function StockGraphAll({ ticker, timeFrame }) { // Use destructuring to get the 
                 mode: 'index',
                 intersect: false
             },
+            // Set the background color of the chart to white
+            background: {
+                color: 'white'
+            }
         },
         scales: {
             y: {
-                beginAtZero: false 
+                beginAtZero: false,
+                ticks: {
+                    color: 'rgba(75, 192, 192, 1)', // Color of y-axis labels
+                },
+                grid: {
+                    color: 'rgba(75, 192, 192, 0.2)' // Color of y-axis grid lines
+                }
             },
             x: {
                 type: 'time',
                 time: {
-                    unit: 'day',
+                    unit: 'month',
                     displayFormats: {
-                        month: 'dd-MM-yy'
+                        month: 'dd-MM-yy-HH:mm'
                     }
                 },
                 ticks: {
@@ -65,7 +75,6 @@ function StockGraphAll({ ticker, timeFrame }) { // Use destructuring to get the 
             duration: 1000 // Animation duration in milliseconds
         }
     };
-    
 
 
     return (

@@ -43,10 +43,20 @@ function StockGraphDay({ ticker, timeFrame }) {
                 mode: 'index',
                 intersect: false
             },
+            // Set the background color of the chart to white
+            background: {
+                color: 'white'
+            }
         },
         scales: {
             y: {
-                beginAtZero: false 
+                beginAtZero: false,
+                ticks: {
+                    color: 'rgba(75, 192, 192, 1)', // Color of y-axis labels
+                },
+                grid: {
+                    color: 'rgba(75, 192, 192, 0.2)' // Color of y-axis grid lines
+                }
             },
             x: {
                 type: 'time',
@@ -65,7 +75,6 @@ function StockGraphDay({ ticker, timeFrame }) {
             duration: 1000 // Animation duration in milliseconds
         }
     };
-
 
     return (
         <div className="stock-graph-container">
