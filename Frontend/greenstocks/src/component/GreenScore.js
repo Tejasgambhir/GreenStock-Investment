@@ -10,7 +10,7 @@ export default function GreenScore({ticker}) {
   const [recScore, setrecScore] = useState(null);
   const [washScore, setwashScore] = useState(null);
   const [error, setError] = useState(null);
-
+  const score = washScore && washScore.Score !== null && washScore.Score !== undefined ? washScore.Score : 54;
 
   const fetchStockScore = async () => {
     try {
@@ -111,7 +111,7 @@ export default function GreenScore({ticker}) {
       </div>
       <div className=" d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
-                <CircularProgressbar value={washScore.Score} text={`${washScore.Score}%`}/> 
+                <CircularProgressbar value={score} text={`${score}%`}/> 
       </div>
       </div>
     </div>
