@@ -3,7 +3,9 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 export default function GreenScore({ticker}) {
 
-  const [esgScore, setesgScore] = useState(null);
+  const [EScore, setEScore] = useState(null);
+  const [SScore, setSScore] = useState(null);
+  const [GScore, setGScore] = useState(null);
   const [greenScore, setgreenScore] = useState(null);
   const [recScore, setrecScore] = useState(null);
   const [error, setError] = useState(null);
@@ -17,7 +19,9 @@ export default function GreenScore({ticker}) {
       }
       const data = await response.json();
       console.log(data);
-      setesgScore(data["Overall Score"]);
+      setEScore(data["Environmental Pillar Score"]);
+      setSScore(data["Social Pillar Score"]);
+      setGScore(data["Governance Pillar Score"]);
       setgreenScore(data["green_score"]);
       setrecScore(data["Recommendation_score"]);
     } catch (err) {
@@ -40,7 +44,7 @@ export default function GreenScore({ticker}) {
       </div>
       <div className=" d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
-                <CircularProgressbar value={Math.floor(esgScore)} text={`${Math.floor(esgScore)}%`}/> 
+                <CircularProgressbar value={Math.floor(EScore)} text={`${Math.floor(EScore)}%`}/> 
       </div>
       </div>
     </div>
@@ -51,27 +55,27 @@ export default function GreenScore({ticker}) {
       </div>
       <div className="d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
-                <CircularProgressbar value={Math.floor(greenScore)} text={`${Math.floor(greenScore)}%`}/> 
+                <CircularProgressbar value={Math.floor(EScore)} text={`${Math.floor(EScore)}%`}/> 
       </div>
       </div>
     </div>
     <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className="green-score text-center alert alert-success">
-        social Score: Decent
+        Social Score: Decent
       </div>
       <div className="d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
-                <CircularProgressbar value={Math.floor(greenScore)} text={`${Math.floor(greenScore)}%`}/> 
+                <CircularProgressbar value={Math.floor(SScore)} text={`${Math.floor(SScore)}%`}/> 
       </div>
       </div>
     </div>
     <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className="green-score text-center alert alert-success">
-        goverance Score: Decent
+        Goverance Score: Decent
       </div>
       <div className="d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
-                <CircularProgressbar value={Math.floor(greenScore)} text={`${Math.floor(greenScore)}%`}/> 
+                <CircularProgressbar value={Math.floor(GScore)} text={`${Math.floor(GScore)}%`}/> 
       </div>
       </div>
     </div>

@@ -194,7 +194,12 @@ class StockScoresView(View):
 
     def fetch_stock_scores(self, ticker):
         stock_collection = connection('Stocks')
-        stock_data = stock_collection.find_one({"ticker": ticker}, {"_id": 0, "green_score": 1, "Recommendation_score": 1, "Overall Score": 1})
+        stock_data = stock_collection.find_one({"ticker": ticker}, {"_id": 0,
+                                                                     "green_score": 1,
+                                                                       "Recommendation_score": 1,
+                                                                         "Governance Pillar Score": 1,
+                                                                         "Environmental Pillar Score": 1,
+                                                                         "Social Pillar Score": 1,})
         if stock_data:
             stock_data = loads(dumps(stock_data))  # Convert MongoDB BSON to JSON
         return stock_data
