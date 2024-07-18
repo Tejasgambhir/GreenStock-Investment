@@ -85,6 +85,7 @@ function StockIndex() {
         <div className="header-name">Logo</div>
         <div className="header-name">Stock Name</div>
         <div className="header-esg">ESG Score</div>
+        <div className="header-esg">Actual score</div>
         <div className="header-price">Current Price</div>
         <div className="header-track">Track</div>
       </div>
@@ -102,7 +103,7 @@ function StockIndex() {
               <CircularProgressbar value={Math.floor(stock.esg_score)} text={`${Math.floor(stock.esg_score)}%`} />
             </div>
             <div className="gain-loss" style={{ color: Math.floor(stock.value_change) < 0 ? 'red' : 'green' }}>
-              {/* {`${stock.value_change.toFixed(2)}%`} */}
+              {`${stock.value_change.toFixed(2)} (${stock.value_percentage.toFixed(2)}%)`}
             </div>
             <div>{stock.current_price}</div>  
             <button className="btn btn-primary">Track</button>
