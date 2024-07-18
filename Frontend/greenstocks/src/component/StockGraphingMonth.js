@@ -29,18 +29,7 @@ function StockGraphDay({ ticker, timeFrame }) {
                 pointRadius: 0,
                 hoverRadius: 0,
             },
-            {
-                // Dataset for cumulative investment
-                label: 'Cumulative Investment',
-                data: stockData.map(data => data.value_paid),
-                fill: false,
-                
-                borderColor: 'rgb(245, 245, 245)',
-                borderWidth: 0.75,
-                tension: 0.1,
-                pointRadius: 0,
-                hoverRadius: 0,
-            },
+    
         ]
     };
 
@@ -54,10 +43,20 @@ function StockGraphDay({ ticker, timeFrame }) {
                 mode: 'index',
                 intersect: false
             },
+            // Set the background color of the chart to white
+            background: {
+                color: 'white'
+            }
         },
         scales: {
             y: {
-                beginAtZero: false 
+                beginAtZero: false,
+                ticks: {
+                    color: 'rgba(75, 192, 192, 1)', // Color of y-axis labels
+                },
+                grid: {
+                    color: 'rgba(75, 192, 192, 0.2)' // Color of y-axis grid lines
+                }
             },
             x: {
                 type: 'time',

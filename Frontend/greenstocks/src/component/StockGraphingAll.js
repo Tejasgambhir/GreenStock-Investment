@@ -24,7 +24,7 @@ function StockGraphAll({ ticker, timeFrame }) { // Use destructuring to get the 
                 data: stockData.map(data => data.value),
                 fill: false,
                 borderColor: 'rgb(75, 245, 192)',
-                borderWidth: 0.8,
+                borderWidth: 1,
                 tension: 0.1,
                 pointRadius: 0,
                 hoverRadius: 0,

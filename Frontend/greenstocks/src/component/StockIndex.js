@@ -57,6 +57,7 @@ function StockIndex() {
         }
       }
     };
+    
 
     const loadImages = async () => {
       const loadedImages = {};
@@ -77,7 +78,7 @@ function StockIndex() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-
+  console.log(stocks);
   return (
     <>
       <div className="stock-header">
@@ -100,8 +101,8 @@ function StockIndex() {
             <div style={{ width: 100, height: 100 }}>
               <CircularProgressbar value={Math.floor(stock.esg_score)} text={`${Math.floor(stock.esg_score)}%`} />
             </div>
-            <div className="gain-loss" style={{ color: stock.profit_loss_percentage < 0 ? 'red' : 'green' }}>
-              {`${5.2}%`}
+            <div className="gain-loss" style={{ color: Math.floor(stock.value_change) < 0 ? 'red' : 'green' }}>
+              {`${stock.value_change.toFixed(2)}%`}
             </div>
             <div>{stock.current_price}</div>  
             <button className="btn btn-primary">Track</button>

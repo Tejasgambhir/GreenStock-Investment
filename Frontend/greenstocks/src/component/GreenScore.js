@@ -39,8 +39,8 @@ export default function GreenScore({ticker}) {
     
   <div className="w-100  d-flex p-3 justify-content-between">
     <div className="row bg-gradient-success score-container m-3 p-5 d-flex flex-column justify-content-center align-items-center ">
-      <div className=" text-whitegreen-score text-center alert alert-success">
-        <p className='text-white'>Green Score: Decent</p>
+      <div className=" text-white green-score text-center alert alert-success">
+        <p className='text-white'>Green Score</p>
       </div>
       <div className=" d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
