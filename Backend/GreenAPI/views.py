@@ -259,137 +259,156 @@ class StockScoresView(View):
         return stock_data
 
 
-# import requests
-# import requests_cache
-# import yfinance as yf
-# import pandas as pd
-# from goose3 import Goose
-# from nltk.corpus import stopwords
-# import nltk
-# from collections import defaultdict
-# from django.core.cache import cache
-# from django.http import JsonResponse
-# import json
-# import sys
-# import os
+import requests
+import requests_cache
+import yfinance as yf
+import pandas as pd
+from goose3 import Goose
+from nltk.corpus import stopwords
+import nltk
+from collections import defaultdict
+from django.core.cache import cache
+from django.http import JsonResponse
+import json
+import sys
+import os
 
 
 
-# def custom_clean_text(text):
-#     # Add your custom text cleaning function here
-#     return text
+def custom_clean_text(text):
+    # Add your custom text cleaning function here
+    return text
 
-# class StockGreenScoresView(View):
-#     nltk.download('stopwords')
-#     DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
+class StockGreenScoresView(View):
+    nltk.download('stopwords')
+    DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
-#     def get(self, request, ticker):
-#         cache_key = f'green_score_{ticker}'
-#         cached_response = cache.get(cache_key)
-#         sustainability_tokens = [
-#     'CLEAN', 'ENERGY', 'GREEN', 'PLANET', 'EMISSIONS', 'NATURAL', 
-#     'SUSTAINABLE', 'RENEWABLE', 'SOLAR', 'WIND', 'HYDRO', 'BIOFUEL', 
-#     'ECO-FRIENDLY', 'RECYCLING', 'CONSERVATION', 'CARBON', 'FOOTPRINT', 
-#     'OFFSET', 'CLIMATE', 'CHANGE', 'ENVIRONMENTAL', 'RESPONSIBILITY', 
-#     'SOCIAL', 'GOVERNANCE', 'ESG', 'ETHICAL', 'RESPONSIBLE', 'INVESTMENT', 
-#     'CIRCULAR', 'ECONOMY', 'WASTE', 'MANAGEMENT', 'POLLUTION', 'REDUCTION', 
-#     'BIODIVERSITY', 'HABITAT', 'PRESERVATION', 'WILDLIFE', 'PROTECTION', 
-#     'SUSTAINABILITY', 'WATER', 'EFFICIENCY', 'RENEWABLES', 'ELECTRIC VEHICLE', 
-#     'GREENHOUSE', 'WASTE', 'NET', 'ZERO', 'CARBON', 'NEUTRAL', 'DECARBONIZATION',
-#     'ECOLOGICAL', 'IMPACT', 'ORGANIC', 'FAIR', 'SOCIALJUSTICE', 'COMMUNITY', 'INCLUSION', 'GOVERNANCE', 'TRANSPARENCY', 
-#     'ACCOUNTABILITY', 'ETHICS', 
-#     'SUSTAINABILITY'
-# ]
+    def get(self, request, ticker):
+        cache_key = f'green_score_{ticker}'
+        cached_response = cache.get(cache_key)
+        sustainability_tokens = [
+    'CLEAN', 'ENERGY', 'GREEN', 'PLANET', 'EMISSIONS', 'NATURAL', 
+    'SUSTAINABLE', 'RENEWABLE', 'SOLAR', 'WIND', 'HYDRO', 'BIOFUEL', 
+    'ECO-FRIENDLY', 'RECYCLING', 'CONSERVATION', 'CARBON', 'FOOTPRINT', 
+    'OFFSET', 'CLIMATE', 'CHANGE', 'ENVIRONMENTAL', 'RESPONSIBILITY', 
+    'SOCIAL', 'GOVERNANCE', 'ESG', 'ETHICAL', 'RESPONSIBLE', 'INVESTMENT', 
+    'CIRCULAR', 'ECONOMY', 'WASTE', 'MANAGEMENT', 'POLLUTION', 'REDUCTION', 
+    'BIODIVERSITY', 'HABITAT', 'PRESERVATION', 'WILDLIFE', 'PROTECTION', 
+    'SUSTAINABILITY', 'WATER', 'EFFICIENCY', 'RENEWABLES', 'ELECTRIC VEHICLE', 
+    'GREENHOUSE', 'WASTE', 'NET', 'ZERO', 'CARBON', 'NEUTRAL', 'DECARBONIZATION',
+    'ECOLOGICAL', 'IMPACT', 'ORGANIC', 'FAIR', 'SOCIALJUSTICE', 'COMMUNITY', 'INCLUSION', 'GOVERNANCE', 'TRANSPARENCY', 
+    'ACCOUNTABILITY', 'ETHICS', 
+    'SUSTAINABILITY'
+]
 
-#         if cached_response:
-#             return JsonResponse(cached_response, safe=False)
+        if cached_response:
+            return JsonResponse(cached_response, safe=False)
 
-#         try:
-#             session = requests_cache.CachedSession('yfinance.cache')
-#             session.verify = False
+        try:
+            session = requests_cache.CachedSession('yfinance.cache')
+            session.verify = False
             
-#             stock = yf.Ticker(ticker, session=session)
-#             stock_info_aggregated = []
+            stock = yf.Ticker(ticker, session=session)
+            stock_info_aggregated = []
 
-#             # get stock info
-#             stock_info = stock.info
-#             business_description = stock_info.get('longBusinessSummary', '')
-#             stock_info_aggregated.append(business_description)
+            # get stock info
+            stock_info = stock.info
+            business_description = stock_info.get('longBusinessSummary', '')
+            stock_info_aggregated.append(business_description)
 
-#             # show news
-#             data_stock_news = stock.news
-#             df_stock_news = pd.json_normalize(data_stock_news)
-#             df_stock_news.to_csv(f'{self.DATA_DIR}/stocknews_{ticker}.csv', index=False)
+            # show news
+            data_stock_news = stock.news
+            df_stock_news = pd.json_normalize(data_stock_news)
+            df_stock_news.to_csv(f'{self.DATA_DIR}/stocknews_{ticker}.csv', index=False)
 
-#             g = Goose()
-#             for d in data_stock_news:
-#                 stock_info_aggregated.append(d["title"])
-#                 response = requests.get(d['link'], verify=False)
-#                 article = g.extract(raw_html=response.text)
-#                 article_clean = custom_clean_text(article.cleaned_text)
-#                 stock_info_aggregated.append(article_clean)
-#             g.close()
+            g = Goose()
+            for d in data_stock_news:
+                stock_info_aggregated.append(d["title"])
+                response = requests.get(d['link'], verify=False)
+                article = g.extract(raw_html=response.text)
+                article_clean = custom_clean_text(article.cleaned_text)
+                stock_info_aggregated.append(article_clean)
+            g.close()
 
-#             aggregated_text = ' '.join(stock_info_aggregated).replace('\n', ' ')
+            aggregated_text = ' '.join(stock_info_aggregated).replace('\n', ' ')
 
-#             with open(f'{self.DATA_DIR}/aggtokens_{ticker}.txt', 'w') as f:
-#                 f.write(aggregated_text)
+            with open(f'{self.DATA_DIR}/aggtokens_{ticker}.txt', 'w') as f:
+                f.write(aggregated_text)
 
-#             tokens = aggregated_text.split()
-#             stopworden = set(stopwords.words('english'))
-#             additional_stopwords = {'a', 'the', '•', '-', '&', ' ', 'None', 'per', 'none', 'company', 'Company', 'stock', 'Stock'}
-#             stopworden.update(additional_stopwords)
+            tokens = aggregated_text.split()
+            stopworden = set(stopwords.words('english'))
+            additional_stopwords = {'a', 'the', '•', '-', '&', ' ', 'None', 'per', 'none', 'company', 'Company', 'stock', 'Stock'}
+            stopworden.update(additional_stopwords)
 
-#             clean_tokens = [token for token in tokens if token not in stopworden]
-#             freq = nltk.FreqDist(clean_tokens)
+            clean_tokens = [token for token in tokens if token not in stopworden]
+            freq = nltk.FreqDist(clean_tokens)
 
-#             green_tokens = 0
-#             green_focus = 0
-#             sum_tokens_10 = 0
-#             freq_items = []
+            green_tokens = 0
+            green_focus = 0
+            sum_tokens_10 = 0
+            freq_items = []
 
-#             for index, (key, val) in enumerate(freq.items(), start=1):
-#                 freq_items.append((key, val))
-#                 if index <= 10:
-#                     sum_tokens_10 += val
-#                 if key.upper() in sustainability_tokens :
-#                     if index <= 10:
-#                         green_focus += val * (10 - index)
-#                     green_tokens += val
+            for index, (key, val) in enumerate(freq.items(), start=1):
+                freq_items.append((key, val))
+                if index <= 10:
+                    sum_tokens_10 += val
+                if key.upper() in sustainability_tokens :
+                    if index <= 10:
+                        green_focus += val * (10 - index)
+                    green_tokens += val
 
-#             green_focus = round(green_focus / sum_tokens_10, 2) if sum_tokens_10 > 0 else 0
+            green_focus = round(green_focus / sum_tokens_10, 2) if sum_tokens_10 > 0 else 0
 
-#             response_data = {
-#                 'Total Tokens': len(freq.items()),
-#                 'Green Tokens': green_tokens,
-#                 'Green Score': round(green_tokens * 10 / len(freq.items()), 2),
-#                 'Green Focus': green_focus,
-#                 'Relevant Tokens': [t for t in freq_items if t[1] >= 5]
-#             }
+            response_data = {
+                'Total Tokens': len(freq.items()),
+                'Green Tokens': green_tokens,
+                'Green Score': round(green_tokens * 10 / len(freq.items()), 2),
+                'Green Focus': green_focus,
+                'Relevant Tokens': [t for t in freq_items if t[1] >= 5]
+            }
 
-#             cache.set(cache_key, response_data, timeout=60*60)  # Cache for 1 hour
-#             return JsonResponse(response_data, safe=False)
-#         except Exception as e:
-#             error_message = str(e)
-#             return JsonResponse({'error': error_message}, status=500)
+            cache.set(cache_key, response_data, timeout=60*60)  # Cache for 1 hour
+            return JsonResponse(response_data, safe=False)
+        except Exception as e:
+            error_message = str(e)
+            return JsonResponse({'error': error_message}, status=500)
 
-#     def fetch_stock_scores(self, ticker):
-#         # Assuming the MongoDB connection is properly configured
-#         client = MongoClient('localhost', 27017)
-#         db = client['StockDatabase']  # Replace with your database name
-#         stock_collection = db['Stocks']  # Replace with your collection name
+    def fetch_stock_scores(self, ticker):
+        # Assuming the MongoDB connection is properly configured
+        client = MongoClient('localhost', 27017)
+        db = client['StockDatabase']  # Replace with your database name
+        stock_collection = db['Stocks']  # Replace with your collection name
 
-#         stock_data = stock_collection.find_one(
-#             {"ticker": ticker},
-#             {
-#                 "_id": 0,
-#                 "green_score": 1,
-#                 "Recommendation_score": 1,
-#                 "Governance Pillar Score": 1,
-#                 "Environmental Pillar Score": 1,
-#                 "Social Pillar Score": 1,
-#             }
-#         )
-#         if stock_data:
-#             stock_data = loads(dumps(stock_data))  # Convert MongoDB BSON to JSON
-#         return stock_data
+        stock_data = stock_collection.find_one(
+            {"ticker": ticker},
+            {
+                "_id": 0,
+                "green_score": 1,
+                "Recommendation_score": 1,
+                "Governance Pillar Score": 1,
+                "Environmental Pillar Score": 1,
+                "Social Pillar Score": 1,
+            }
+        )
+        if stock_data:
+            stock_data = loads(dumps(stock_data))  # Convert MongoDB BSON to JSON
+        return stock_data
+    
+import pandas as pd
+
+class GreenWashView(View):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.green_wash = {}  # Renamed to lowercase for convention
+        df = pd.read_csv(r"C:\\Users\\User\Documents\\BlackRock\\BlackRock_HackKnight_2024\\Backend\\GreenAPI\\convert.csv")
+
+
+        # Assuming 'ticker' is a column name in the CSV file
+        for index, row in df.iterrows():
+            self.green_wash[row['Ticker']] = row.to_dict()
+
+    def get(self, request, ticker):
+        if ticker in self.green_wash:
+            return JsonResponse(self.green_wash[ticker])
+        else:
+            return JsonResponse({"error": "Ticker not found"}, status=404)
