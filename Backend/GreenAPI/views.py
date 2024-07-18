@@ -67,6 +67,20 @@ class GreenNewsView(View):
 
 
 class StockDetailsView(View):
+    projection = {
+            'companyname': 1,
+            'industry': 1,
+            'country': 1,
+            'exchangename': 1,
+            'Overall Score': 1,
+            'Overall Transparency Score': 1,
+            'Overall Score Global Rank': 1,
+            'Overall Industry Rank': 1,
+            'Overall Region Rank': 1,
+            'dividend_yield': 1,
+            'market_cap': 1,
+            'Latest Score Date': 1,
+        }
     def get(self, request, ticker):
         cache_key = f'stock_data_{ticker}'
         stock_data = cache.get(cache_key)
@@ -81,12 +95,10 @@ class StockDetailsView(View):
 
     def fetch_stock_data(self, ticker):
         stock_collection = connection('Stocks')
-        stock_data = stock_collection.find_one({"ticker": ticker})
+        stock_data = stock_collection.find_one({"ticker": ticker},self.projection)
         if stock_data:
             stock_data = loads(dumps(stock_data))
             stock_data.pop('_id', None)
-            stock_data.pop('balance_sheet', None)
-            stock_data.pop('financials', None)
         return stock_data
 
 from datetime import datetime, timedelta

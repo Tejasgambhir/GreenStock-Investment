@@ -36,7 +36,7 @@ const StockDetails = ({ ticker }) => {
       <header className="App-header">
         <div className="header-content">
           <div className="title-container">
-            <h1>Overall Portfolio</h1>
+            <h1>Company Details</h1>
           </div>
         </div>
         <div className="stock-info">
