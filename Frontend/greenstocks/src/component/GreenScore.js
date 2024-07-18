@@ -39,8 +39,8 @@ export default function GreenScore({ticker}) {
     
   <div className="w-100  d-flex p-3 justify-content-between">
     <div className="row bg-gradient-success score-container m-3 p-5 d-flex flex-column justify-content-center align-items-center ">
-      <div className=" green-score text-center alert alert-success">
-        Green Score: Decent
+      <div className=" text-whitegreen-score text-center alert alert-success">
+        <p className='text-white'>Green Score: Decent</p>
       </div>
       <div className=" d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
@@ -51,7 +51,8 @@ export default function GreenScore({ticker}) {
    
     <div className="row bg-gradient-success score-container m-3 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className="green-score text-center alert alert-success">
-        Environmental Score: Decent
+        
+        <p className='text-white'>Environmental Score</p>
       </div>
       <div className="d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
@@ -61,7 +62,8 @@ export default function GreenScore({ticker}) {
     </div>
     <div className="row bg-gradient-success score-container m-3 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className="green-score text-center alert alert-success">
-        Social Score: Decent
+       
+        <p className='text-white'>Social Score</p>
       </div>
       <div className="d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
@@ -71,7 +73,8 @@ export default function GreenScore({ticker}) {
     </div>
     <div className="row bg-gradient-success score-container m-3 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className="green-score text-center alert alert-success">
-        Goverance Score: Decent
+        
+        <p className='text-white'>Goverance Score</p>
       </div>
       <div className="d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
@@ -82,7 +85,8 @@ export default function GreenScore({ticker}) {
   
     <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className=" green-score text-center alert alert-success">
-        Recommendation Score: Decent
+        
+        <p className='text-white'>Recommendation Score</p>
       </div>
       <div className=" d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>

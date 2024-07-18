@@ -15,13 +15,14 @@ function GreenNews() {
             <div className="news-container">
                 {newsData.map((news, index) => (
                     <div className="news-item" key={index}>
-                        <img src={news.image} alt="news" className="news-image"/>
+                        <img src={news.image} height='100px' width='100px'alt="news" className="news-image"/>
                         <div className="news-content">
                             <a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">
-                                {news.title}
+                                <p className='text-white'>
                                 {news.summary}
+                                </p>
                             </a>
-                            <p className="news-source">{news.source}</p>
+                            <p className=" text-white news-source">{news.source}</p>
                         </div>
                     </div>
                 ))}

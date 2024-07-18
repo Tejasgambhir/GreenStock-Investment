@@ -80,8 +80,14 @@ function StockIndex() {
 
   return (
     <>
-
-
+      <div className="stock-header">
+        <div className="header-name">Logo</div>
+        <div className="header-name">Stock Name</div>
+        <div className="header-esg">ESG Score</div>
+        <div className="header-price">Current Price</div>
+        <div className="header-track">Track</div>
+      </div>
+    <div className="stock-holdings">
       {selectedTicker ? (
         navigate(`/stocks/${selectedTicker}`)
       ) : (
@@ -94,12 +100,15 @@ function StockIndex() {
             <div style={{ width: 100, height: 100 }}>
               <CircularProgressbar value={Math.floor(stock.esg_score)} text={`${Math.floor(stock.esg_score)}%`} />
             </div>
-            <div>{stock.current_price}</div>
+            <div className="gain-loss" style={{ color: stock.profit_loss_percentage < 0 ? 'red' : 'green' }}>
+              {`${5.2}%`}
+            </div>
+            <div>{stock.current_price}</div>  
             <button className="btn btn-primary">Track</button>
           </button>
         ))
       )}
-   
+   </div>
         </>
   );
 }
