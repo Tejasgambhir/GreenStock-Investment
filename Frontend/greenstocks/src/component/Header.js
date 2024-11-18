@@ -5,13 +5,13 @@ function Header() {
   return (
     <div>
        <nav className="App-nav">
-        <div className="project-title">GreenStock Investment</div>
+        <div className="project-title">Eco friendly stock Investment</div>
         <div className="nav-links">
-        <button ><Link to='/' className='btn btn-dark'>Home</Link></button>
-          <button ><Link to='/Portfolio' className='btn btn-dark'>Portfolio</Link></button>
-          <button ><Link to='/news' className='btn btn-dark'>News</Link></button>
-          <button><Link to='/aboutus' className='btn btn-dark'>About</Link></button>
-          <button><Link to='/login' className='btn btn-dark'>Login/Register</Link></button>
+        <button ><Link to='/' className='btn  btn-custom'>Home</Link></button>
+          {/* <button ><Link to='/Portfolio' className='btn btn-custom'>Stock list</Link></button> */}
+          <button ><Link to='/news' className='btn btn-custom'>News</Link></button>
+          <button><Link to='/aboutus' className='btn btn-custom'>About</Link></button>
+          <button><Link to='/login' className='btn btn-custom'>Login/Register</Link></button>
         </div>
       </nav>
     </div>

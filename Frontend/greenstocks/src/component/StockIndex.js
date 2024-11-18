@@ -78,9 +78,14 @@ function StockIndex() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-  console.log(stocks);
+  // console.log(stocks);
   return (
     <>
+      <div class="stock-list-heading my-4">
+      <h1>Stock List</h1>
+    </div>
+     
+
       <div className="stock-header">
         <div className="header-name">Logo</div>
         <div className="header-name">Stock Name</div>
@@ -89,6 +94,7 @@ function StockIndex() {
         <div className="header-price">Current Price</div>
         <div className="header-track">Track</div>
       </div>
+
     <div className="stock-holdings">
       {selectedTicker ? (
         navigate(`/stocks/${selectedTicker}`)
@@ -97,20 +103,21 @@ function StockIndex() {
           <button key={`sh_${stock.ticker}`} className="stock-button" onClick={() => handleStockClick(stock.ticker)}>
             <img src={images[stock.ticker] || defaultImage} alt={stock.name} className="stock-image" />
             <div className="stock-details">
-              <div className="stock-name">{stock.name}</div>
+              <div className="stock-name">{stock.name }</div>
             </div>
             <div style={{ width: 100, height: 100 }}>
               <CircularProgressbar value={Math.floor(stock.esg_score)} text={`${Math.floor(stock.esg_score)}%`} />
             </div>
             <div className="gain-loss" style={{ color: Math.floor(stock.value_change) < 0 ? 'red' : 'green' }}>
-              {`${stock.value_change.toFixed(2)} (${stock.value_percentage.toFixed(2)}%)`}
+              {`${stock.value_change?.toFixed(2)} (${stock.value_percentage?.toFixed(2)}%)`}
             </div>
-            <div>{stock.current_price}</div>  
+            <div>{stock.current_price} &#8377;</div>  
             <button className="btn btn-primary">Track</button>
           </button>
         ))
       )}
    </div>
+
         </>
   );
 }

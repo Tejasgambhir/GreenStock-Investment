@@ -19,20 +19,18 @@ function StockGraphAll({ ticker, timeFrame }) { // Use destructuring to get the 
         labels: stockData.map(data => data.date),
         datasets: [
             {
-                // Dataset for stock value
                 label: 'Stock Value',
                 data: stockData.map(data => data.value),
                 fill: false,
-                borderColor: 'rgb(75, 245, 192)',
+                borderColor: 'rgb(34, 34, 34)', // Darker line for better contrast
                 borderWidth: 1,
                 tension: 0.1,
                 pointRadius: 0,
                 hoverRadius: 0,
-            },
-            
+            }
         ]
     };
-
+    
     const chartOptions = {
         responsive: true,
         plugins: {
@@ -42,47 +40,44 @@ function StockGraphAll({ ticker, timeFrame }) { // Use destructuring to get the 
             tooltip: {
                 mode: 'index',
                 intersect: false
-            },
-            // Set the background color of the chart to white
-            background: {
-                color: 'white'
             }
         },
         scales: {
             y: {
                 beginAtZero: false,
                 ticks: {
-                    color: 'rgba(75, 192, 192, 1)', // Color of y-axis labels
+                    color: 'rgb(34, 34, 34)' // Darker y-axis labels for visibility
                 },
                 grid: {
-                    color: 'rgba(75, 192, 192, 0.2)' // Color of y-axis grid lines
+                    color: 'rgba(34, 34, 34, 0.1)' // Lighter grid lines for a subtle background
                 }
             },
             x: {
                 type: 'time',
                 time: {
-                    unit: 'month',
-                    displayFormats: {
-                        month: 'dd-MM-yy-HH:mm'
-                    }
+                    unit: 'year',
+                 
                 },
                 ticks: {
-                    display: false
+                    color: 'rgb(34, 34, 34)', // Darker x-axis labels for better contrast
+                    display: true
+                },
+                grid: {
+                    color: 'rgba(34, 34, 34, 0.1)' // Light grid lines for x-axis
                 }
             }
         },
         animation: {
-            duration: 1000 // Animation duration in milliseconds
+            duration: 1000
         }
     };
-
-
+    
     return (
-        
         <div className="stock-graph-container">
             <Line data={chartData} options={chartOptions} />
         </div>
     );
+    
 }
 
 export default StockGraphAll;

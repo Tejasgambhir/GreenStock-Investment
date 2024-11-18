@@ -83,7 +83,7 @@ function StockIndex() {
   return (
     <div>
       <Header />
-        <h1 className='text-center text-white mt-3'>Track List</h1>
+        <h1 className='text-center text-dark mt-5 mb-3'>Stock List</h1>
       <div className="stock-holdings">
       {selectedTicker ? (
           navigate(`/stocks/${selectedTicker}`)

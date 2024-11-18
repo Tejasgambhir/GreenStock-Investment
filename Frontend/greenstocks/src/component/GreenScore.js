@@ -10,7 +10,6 @@ export default function GreenScore({ticker}) {
   const [recScore, setrecScore] = useState(null);
   const [washScore, setwashScore] = useState(null);
   const [error, setError] = useState(null);
-  const score = washScore && washScore.Score !== null && washScore.Score !== undefined ? washScore.Score : 54;
 
   const fetchStockScore = async () => {
     try {
@@ -36,15 +35,15 @@ export default function GreenScore({ticker}) {
   }, [ticker]);
 
 
-  const fetchgreenWash = async (ticker) => {
+  const fetchgreenWash = async () => {
     try {
       const response = await fetch(`http://localhost:8000/api/greenwash/${ticker}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
-      setwashScore(data);
+      console.log(data['greenwashing_detected']);
+      setwashScore(data['greenwashing_detected']);
     } catch (err) {
       setError(err.message || 'An error occurred');
     }
@@ -55,6 +54,21 @@ export default function GreenScore({ticker}) {
     }
   }, [ticker]);
 
+
+  const score =100; // If true, score is 100; if false, score is 0
+  
+  // Set color based on GScore
+  const color = washScore ? 'red' : 'green';
+  const text = washScore ? "Yes" : "No";
+  // Define the custom styles for the CircularProgressbar
+  const progressBarStyles = {
+    path: {
+      stroke: color, // dynamic color based on GScore
+    },
+    text: {
+      fill: color, // optional, to set the text color too
+    },
+  };
 
   return (
     
@@ -107,11 +121,15 @@ export default function GreenScore({ticker}) {
     <div className="row bg-gradient-success score-container m-4 p-5 d-flex flex-column justify-content-center align-items-center ">
       <div className=" green-score text-center alert alert-success">
         
-        <p className='text-white'>GreenWash Score</p>
+        <p className='text-white'>Potential GreenWashing</p>
       </div>
       <div className=" d-flex align-items-center justify-content-center  text-center">
       <div style={{ width: 100, height: 100 }}>
-                <CircularProgressbar value={score} text={`${score}%`}/> 
+        <CircularProgressbar
+          value={score}
+          text={text}
+          styles={progressBarStyles}
+        />
       </div>
       </div>
     </div>

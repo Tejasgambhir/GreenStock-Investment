@@ -18,11 +18,11 @@ function GreenNews() {
                         <img src={news.image} height='100px' width='100px'alt="news" className="news-image"/>
                         <div className="news-content">
                             <a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">
-                                <p className='text-white'>
+                                <p className='text-dark'>
                                 {news.summary}
                                 </p>
                             </a>
-                            <p className=" text-white news-source">{news.source}</p>
+                            <p className=" text-dark news-source">{news.source}</p>
                         </div>
                     </div>
                 ))}

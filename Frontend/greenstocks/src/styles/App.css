@@ -1,27 +1,54 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #121212; /* Dark background */
-  color: #F5F5F5; /* Off-white text color */
+  background-color: #F0F7FF; /* Dark background */ 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;  
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Style the stock list heading */
+.stock-list-heading {
+  margin-bottom: 20px; /* Add space below the heading */
+  padding: 10px 0; /* Add space around the heading */
+  text-align: center; /* Center the heading */
+}
+
+/* Style for the h1 or h2 */
+.stock-list-heading h1, .stock-list-heading h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: #003366; /* Dark Blue */
+  font-size: 2em; /* Adjust the size based on preference */
+  text-transform: uppercase; /* Capitalize the heading for a professional look */
+  margin: 0; /* Remove default margin */
+}
+
+/* Add a border or underline for emphasis */
+.stock-list-heading h1::after, .stock-list-heading h2::after {
+  content: "";
+  display: block;
+  width: 50px; /* Add an underline or small border below the heading */
+  height: 3px;
+  background-color: #2563EB; /* Blue accent color */
+  margin: 10px auto 0; /* Center the underline */
 }
 
 .App-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1a1a1a;
+  background-color: #FFF100;
   padding: 10px;
+
 }
 
 .nav-links button {
   background-color: transparent;
   border: none;
-  color: #F5F5F5;
+  color: #FFFFFF;
   margin: 0 10px;
   padding: 10px 20px;
   cursor: pointer;
@@ -114,6 +141,7 @@ body {
   color: #F5F5F5;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-left: 2px;
 }
 
 .time-frame-btn:hover {
@@ -138,13 +166,22 @@ h1 {
 
 
 .stock-header {
-  display: flex;
-  justify-content: space-evenly;
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-top:30px;
+  display: grid;
+  grid-template-columns: 3fr 3fr 3fr 3fr 3fr 3fr;
+  gap: 100px;
+  padding: 10px;
+  background-color: #c0c0c0a3;
+  border-bottom: 2px solid #ddd;
+  text-align: center;
+  max-width: 1215px; /* Set a maximum width for the grid */
+  margin: 0 auto; /* Centers text in each column */
 }
-
+.header-name, .header-esg, .header-price, .header-track {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333; /* Dark text color */
+  text-align: center; /* Centers text in each column */
+}
 
 .stock-holdings {
   display: flex;
@@ -160,8 +197,8 @@ h1 {
   width: 80%; /* Adjust this as needed */
   padding: 15px;
   border: 1px solid #121212;;
-  border-radius: 8px;
-  background-color: #1a1a1a;
+  
+  background-color: #002d72;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: box-shadow 0.3s ease;
@@ -219,10 +256,11 @@ h1 {
   max-width: 80%;
 }
 
+
 .stock-graph-container {
-  width: 70%; /* Adjust this to your preference */
-  height: 500px; /* Adjust height as needed */
-  margin: 0 auto; /* Center the graph */
+  width: 80%; /* Adjust this to your preference */
+  height: 700px; /* Adjust height as needed */
+  margin: 30px auto ; /* Center the graph */
 }
 .table-container {
   margin: 20px;
@@ -388,10 +426,17 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1a1a1a;
+  background-color: #002d72;
   padding: 10px;
+  box-shadow: 0px 1px 0 0 rgb(24, 72, 85);
 }
-
+.btn-custom {
+  background-color: #4CAF50; /* Button color */
+  color: #FFFFFF; /* Button text color */
+}
+.btn-custom:hover {
+  background-color: #45A049; /* Darker green on hover */
+}
 .nav-links button {
   background-color: transparent;
   border: none;
@@ -603,3 +648,147 @@ h1 {
     background-color: #8400ff /* Replace with your desired background color */
   }
   
+ /* Image css  */
+ .image {
+  position: relative;                      /* Establish a positioning context */
+  width: 100%;                             /* Adjust width as needed */
+  height: 100vh;                           /* Set the desired height */
+  background-image: url('../Images/6.jpg'); /* Set your background image */
+  background-size: cover;                  /* Cover the entire container */
+  background-position: center;   
+  background-repeat: no-repeat;    /* Center the image */
+  color: white;                            /* Text color for contrast */                  /* Center text */
+}
+.content {
+   position: relative;                      /* Position relative to .container */
+  z-index: 1;                              /* Ensure content is above background */
+}
+
+.typewriter {
+  font-family: monospace;                     /* Use a monospace font */
+  white-space: nowrap;                        /* Prevent text from wrapping */
+  overflow: hidden;                           /* Hide overflow */
+  border-right: 2px solid black;             /* Cursor effect */
+  display: inline-block;                      /* Ensure it only takes necessary width */
+  animation: typing 5s steps(72) forwards ,    /* Adjust the steps based on text length */
+             blink-caret 0.75s step-end infinite; /* Cursor blink animation */
+}
+
+@keyframes typing {
+  from {
+      width: 0;                               /* Start with no width */
+  }
+  to {
+      width: 100%;                            /* Expand to full width */
+  }
+}
+
+@keyframes blink-caret {
+  from, to {
+      border-color: transparent;              /* Hide cursor */
+  }
+  50% {
+      border-color: black;                    /* Show cursor */
+  }
+}
+/* Hero Container */
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+}
+
+/* Image Wrapper */
+.hero-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Hero Image */
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Gradient Overlay */
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.3)
+  );
+}
+
+/* Content Wrapper */
+.content-wrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 24px;
+  height: 100%;
+}
+
+/* Hero Title */
+.hero-title {
+  color: white;
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+  margin-top: 5rem;
+  max-width: 700px;
+}
+
+.hero-title span {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+/* Hero Description */
+.hero-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  max-width: 900px;
+}
+
+/* CTA Button */
+.cta-button {
+  background-color: white;
+  color: black;
+  padding: 12px 32px;
+  border-radius: 9999px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-title {
+      font-size: 2.5rem;
+  }
+  
+  .hero-description {
+      font-size: 1rem;
+  }
+}
+

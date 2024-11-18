@@ -275,15 +275,13 @@ import os
 
 
 
-def custom_clean_text(text):
-    # Add your custom text cleaning function here
-    return text
+
 
 class StockGreenScoresView(View):
     nltk.download('stopwords')
     DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
-    def get(self, request, ticker):
+    def get(self, requests, ticker):
         cache_key = f'green_score_{ticker}'
         cached_response = cache.get(cache_key)
         sustainability_tokens = [
@@ -326,8 +324,7 @@ class StockGreenScoresView(View):
                 stock_info_aggregated.append(d["title"])
                 response = requests.get(d['link'], verify=False)
                 article = g.extract(raw_html=response.text)
-                article_clean = custom_clean_text(article.cleaned_text)
-                stock_info_aggregated.append(article_clean)
+                stock_info_aggregated.append(article)
             g.close()
 
             aggregated_text = ' '.join(stock_info_aggregated).replace('\n', ' ')
@@ -399,16 +396,33 @@ import pandas as pd
 class GreenWashView(View):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.green_wash = {}  # Renamed to lowercase for convention
-        df = pd.read_csv(r"C:\\Users\\User\Documents\\BlackRock\\BlackRock_HackKnight_2024\\Backend\\GreenAPI\\convert.csv")
+        self.green_wash = {}  # Dictionary to hold ticker data
+        
+        # Flexible file path handling (make sure your file path is correct)
+        file_path = r"C:\Users\TEJAS\Desktop\Major project\Eco-friendly stock advisor\Backend\GreenAPI\overall_esg_scores and greenWashing.csv"
+        
+        try:
+            # Reading the CSV file
+            df = pd.read_csv(file_path)
 
-
-        # Assuming 'ticker' is a column name in the CSV file
-        for index, row in df.iterrows():
-            self.green_wash[row['Ticker']] = row.to_dict()
-
+            # Assuming 'ticker' and 'greenwashing_detected' are columns in the CSV
+            for index, row in df.iterrows():
+                self.green_wash[row['ticker']] = {
+                    'greenwashing_detected': row['greenwashing_detected'],
+                    
+                }
+        except Exception as e:
+            print(f"Error loading the CSV: {e}")
+            self.green_wash = {}
+    
     def get(self, request, ticker):
+
         if ticker in self.green_wash:
-            return JsonResponse(self.green_wash[ticker])
+            # Return the greenwashing_detected value for that ticker
+            return JsonResponse({
+                'ticker': ticker,
+                'greenwashing_detected': self.green_wash[ticker]['greenwashing_detected']
+            })
         else:
+            # If ticker not found, return an error message
             return JsonResponse({"error": "Ticker not found"}, status=404)
